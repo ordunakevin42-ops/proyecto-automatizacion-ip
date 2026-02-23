@@ -1,40 +1,52 @@
-# Proyecto Automatización - Validación de IP
+🚀 Proyecto de Automatización – Generador Inteligente de Routing
+📌 Descripción
 
-## 📌 Descripción
-Este proyecto valida direcciones IP en formato IPv4 utilizando Python.
-Incluye pruebas automáticas con pytest y control de versiones con Git.
+Este proyecto automatiza la generación de configuraciones básicas de routing para routers Cisco utilizando Python.
 
----
+El sistema:
 
-## 🚀 Tecnologías utilizadas
+✅ Valida redes en formato CIDR
 
-- Python 3.13
-- Pytest
-- Git
-- GitHub
+✅ Calcula automáticamente la máscara wildcard
 
----
+✅ Detecta automáticamente el área OSPF según el tipo de red
 
-## 🧠 ¿Qué hace el programa?
+✅ Genera configuración dinámica para OSPF o EIGRP
 
-El programa:
+✅ Integra configuración básica del router desde un archivo .txt
 
-✔ Verifica que la IP tenga 4 partes separadas por puntos  
-✔ Verifica que cada número esté entre 0 y 255  
-✔ Devuelve True si es válida  
-✔ Devuelve False si es inválida  
+✅ Utiliza control de versiones con Git y GitHub
 
----
+🚀 Tecnologías utilizadas
 
-## 🧪 Pruebas automáticas
+Python 3.13
 
-Se incluyen pruebas con pytest para validar:
+Pytest
 
-- IP válida
-- IP con formato incorrecto
-- IP fuera de rango
+Git
 
-Para ejecutar las pruebas:
+GitHub
 
-```bash
-pytest
+Librería ipaddress
+
+🧠 ¿Qué hace el programa?
+
+El usuario ingresa:
+
+Protocolo (OSPF o EIGRP)
+
+Red en formato CIDR (ej. 192.168.1.0/24)
+
+El programa automáticamente:
+
+Calcula la red
+
+Calcula la máscara wildcard
+
+Detecta el área OSPF (si aplica)
+
+Genera la configuración de routing
+
+Combina la configuración básica del router desde un archivo externo
+
+📂 Estructura del proyecto
