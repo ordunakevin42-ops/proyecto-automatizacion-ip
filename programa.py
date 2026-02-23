@@ -17,7 +17,28 @@ def detectar_area(red):
             return 2
         elif str(red.network_address).startswith("172."):
             return 3
-    return 0  # Backbone para redes públicas
+    return 0
+
+
+def leer_config_basica(archivo):
+    datos = {}
+    with open(archivo, "r") as f:
+        for linea in f:
+            clave, valor = linea.strip().split("=")
+            datos[clave] = valor
+    return datos
+
+
+def generar_config_basica(datos):
+    configuracion = f"""
+hostname {datos['hostname']}
+
+interface {datos['interfaz']}
+ ip address {datos['ip']} {datos['mascara']}
+ no shutdown
+ description Conexion LAN
+"""
+    return configuracion
 
 
 def generar_ospf(red_cidr):
@@ -49,25 +70,31 @@ router eigrp {asn}
 
 
 def main():
-    print("=== GENERADOR INTELIGENTE DE ROUTING ===")
-    protocolo = input("Elige protocolo (ospf/eigrp): ").lower()
+    print("=== GENERADOR AUTOMÁTICO DESDE ARCHIVO ===")
+
+    datos_router = leer_config_basica("router_config.txt")
+
+    print("\n--- CONFIGURACIÓN BÁSICA ---")
+    print(generar_config_basica(datos_router))
+
+    protocolo = input("\nElige protocolo (ospf/eigrp): ").lower()
     red_cidr = input("Ingresa la red en formato CIDR (ej. 192.168.1.0/24): ")
 
     try:
         if protocolo == "ospf":
-            print("\nConfiguración OSPF generada automáticamente:")
+            print("\n--- CONFIGURACIÓN OSPF ---")
             print(generar_ospf(red_cidr))
 
         elif protocolo == "eigrp":
             asn = input("Ingresa el número de AS (ej. 100): ")
-            print("\nConfiguración EIGRP generada automáticamente:")
+            print("\n--- CONFIGURACIÓN EIGRP ---")
             print(generar_eigrp(red_cidr, asn))
 
         else:
             print("Protocolo no válido")
 
     except ValueError:
-        print("Red no válida. Usa formato correcto, ejemplo: 192.168.1.0/24")
+        print("Red no válida")
 
 
 if __name__ == "__main__":
